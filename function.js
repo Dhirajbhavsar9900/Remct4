@@ -43,10 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <img src="${avatarURL}" alt="${userName}" class="w-10 h-10 rounded-full">
             <div class="flex-1">
                 <p class="text-gray-800"><strong>${userName}:</strong> <span class="comment-text">${text}</span></p>
-                <div class="flex space-x-2 mt-1">
-                    <button class="text-blue-500 text-sm hover:underline reply-btn">Reply</button>
-                    <button class="text-gray-500 text-sm hover:underline edit-btn">Edit</button>
-                    <button class="text-red-500 text-sm hover:underline delete-btn">Delete</button>
+                <div class="flex space-x-2 mt-2">
+                    <button class=" transition hover:bg-blue-800 bg-blue-500 p-2 px-3 rounded-2xl text-white text-sm  reply-btn">Reply</button>
+                    <button class=" bg-gray-700 hover:bg-gray-950 transition p-2 px-4 text-white rounded-2xl text-sm  edit-btn">Edit</button>
+                    <button class=" bg-red-700 px-3 rounded-2xl text-white text-sm hover:bg-red-700 transition delete-btn">Delete</button>
                 </div>
                 <div class="replies ml-6 mt-2 space-y-2 hidden"></div>
             </div>
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         replySubmitBtn.addEventListener('click', () => {
             const replyText = replyInput.value.trim();
             if (replyText) {
-                addComment(replyText, "You", "./ai-generated-8635685_640.webp", replyForm.parentElement); // Replace with appropriate image path
+                addComment(replyText, "You", "./ai-generated-8635685_640.webp", replyForm.parentElement);
                 replyForm.remove();
             } else {
                 alert("Comment box is empty");
