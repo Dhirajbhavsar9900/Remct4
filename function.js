@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentsContainer = document.getElementById('commentsContainer');
     const charCounter = document.getElementById('charCounter');
     const resetButton = document.getElementById('resetButton');
-    console.log(resetButton);
-
+    const newCommentForm = document.getElementById('newCommentForm');
+    const usernameInput = document.getElementById('username-input');
+    const commentText = document.getElementById('commentText');
+    
     const charLimit = 250;
 
     const randomUserNames = [
@@ -60,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const commentTextElement = comment.querySelector('.comment-text');
 
         replyBtn.addEventListener('click', () => {
-            // Create the reply form with username input and textarea
             const replyForm = createReplyFormWithUsername();
             repliesContainer.classList.remove('hidden');
             repliesContainer.appendChild(replyForm);
@@ -95,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return comment;
     }
 
-    // Create reply form with username input and comment textarea
     function createReplyFormWithUsername() {
         const replyForm = document.createElement('div');
         replyForm.classList.add('reply-form', 'mt-2');
@@ -151,4 +151,26 @@ document.addEventListener('DOMContentLoaded', () => {
         repliesContainer.classList.remove('hidden');
     }
 
+    // Add event listener to new comment form
+    newCommentForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = usernameInput.value.trim();
+        const text = commentText.value.trim();
+
+        if (username && text) {
+            addComment(text, username, getRandomAvatar());
+            usernameInput.value = '';
+            commentText.value = '';
+            charCounter.textContent = `${charLimit} characters left`;
+        } else {
+            alert('Please fill in both the username and comment text.');
+        }
+    });
+
+    // Update character counter for new comment input
+    commentText.addEventListener('input', () => {
+        const remaining = charLimit - commentText.value.length;
+        charCounter.textContent = `${remaining} characters left`;
+    });
 });
+    
