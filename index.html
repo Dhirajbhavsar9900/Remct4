@@ -8,22 +8,19 @@
 </head>
 <body class="bg-gray-100 p-6">
   <div class="max-w-2xl mx-auto bg-white shadow-lg p-6 rounded-lg">
-    <h1 class="text-2xl font-semibold mb-4">Comments</h1>
-    <form id="newCommentForm" class="mb-6">
-      <textarea id="commentInput" rows="3" maxlength="250" placeholder="Add a comment..."
-        class="w-full p-3 border border-gray-300 font-semibold rounded-lg resize-none focus:outline-none focus:border-blue-400 "></textarea>
-      <div class="flex justify-between items-center mt-2">
-        <span id="charCounter" class="text-sm text-gray-600">250 characters left</span>
-        <div>
-          <button type="button" id="resetButton" class="bg-gray-300 text-gray-700 hover:text-gray-900 transition py-1 px-3 rounded hover:bg-gray-400 mr-2 font-bold">Reset</button>
-          <button type="submit" class="bg-red-500 font-bold text-white py-1 px-3 rounded hover:bg-red-700 transition">Add Comment</button>
-        </div>
-      </div>
-    </form>
+    <div class="flex justify-between p-4">
+      <h1 class="text-2xl font-semibold mb-4">Nested Comments Project</h1>
+      <button id="resetButton" class="mt-4 px-5 py-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none">
+        Reset
+      </button>
+    </div>
+    
+    <div id="commentsContainer" class="space-y-4"></div>
 
-    <div id="commentsContainer" class="space-y-4">
-</div>
+    <!-- Reset Button -->
+   
   </div>
+
   <script src="./function.js"></script>
 </body>
 </html>

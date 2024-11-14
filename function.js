@@ -1,41 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const newCommentForm = document.getElementById('newCommentForm');
-    const commentInput = document.getElementById('commentInput');
+
     const commentsContainer = document.getElementById('commentsContainer');
     const charCounter = document.getElementById('charCounter');
     const resetButton = document.getElementById('resetButton');
+    console.log(resetButton);
+    
     const charLimit = 250;
 
-    
+    const randomUserNames = [
+        "John Doe", "Jane Smith", "Mark Wilson", "Emily Davis", "Michael Brown", 
+        "Sarah Lee", "David Clark", "Sophia Johnson", "James White", "Olivia Harris"
+    ];
+
+    const randomAvatarURLs = [
+        "./ai-generated-8635685_640.webp", "./d7090ecd0836259fe622e0bb84370d54.jpg", 
+        "./generative-ai-young-smiling-man-avatar-man-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-d-vector-people-279560903.webp", 
+        "./4.jpeg", "./5.jpeg" ,"./7.webp", "./8.jpg", "./9.jpeg", "./10.jpg", "https://thumbs.dreamstime.com/b/image-smiling-man-who-has-idea-handsome-bearded-guy-sweater-just-came-up-great-thought-white-background-134071461.jpg", "https://st2.depositphotos.com/1337688/5718/i/450/depositphotos_57188137-stock-photo-smiling-young-boy-in-a.jpg","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ0FpBg5Myb9CQ-bQpFou9BY9JXoRG6208_Q&s", "https://xsgames.co/randomusers/assets/avatars/male/74.jpg"
+    ];
+
     initializeDefaultComments();
 
-    commentInput.addEventListener('input', () => {
-        const remaining = charLimit - commentInput.value.length;
-        charCounter.textContent = `${remaining} characters left`;
-    });
 
-    
-    newCommentForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const commentText = commentInput.value.trim();
-        if (commentText) {
-            addComment(commentText, "You", "./ai-generated-8635685_640.webp", commentsContainer); // Replace with appropriate image path
-            commentInput.value = '';
-            charCounter.textContent = `${charLimit} characters left`;
-        } else {
-            alert("Comment box is empty");
-        }
-    });
-
-    
     resetButton.addEventListener('click', () => {
-        commentsContainer.innerHTML = '';
-        initializeDefaultComments();
-        commentInput.value = '';
-        charCounter.textContent = `${charLimit} characters left`;
+        // Clear the comment section
+        window.location.reload();
     });
 
-    function addComment(text, userName, avatarURL, parentElement = commentsContainer) {
+    function getRandomUserName() {
+        return randomUserNames[Math.floor(Math.random() * randomUserNames.length)];
+    }
+
+    function getRandomAvatar() {
+        return randomAvatarURLs[Math.floor(Math.random() * randomAvatarURLs.length)];
+    }
+
+    function addComment(text, userName, avatarURL, parentElement = commentsContainer, isReply = false) {
         const comment = document.createElement('div');
         comment.classList.add('p-4', 'bg-gray-50', 'border', 'border-gray-200', 'rounded-lg', 'space-y-2', 'shadow-sm', 'flex', 'items-start', 'space-x-3');
 
@@ -43,10 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <img src="${avatarURL}" alt="${userName}" class="w-10 h-10 rounded-full">
             <div class="flex-1">
                 <p class="text-gray-800"><strong>${userName}:</strong> <span class="comment-text">${text}</span></p>
-                <div class="flex space-x-2 mt-2">
-                    <button class=" transition hover:bg-blue-800 bg-blue-500 p-2 px-3 rounded-2xl text-white text-sm  reply-btn">Reply</button>
-                    <button class=" bg-gray-700 hover:bg-gray-950 transition p-2 px-4 text-white rounded-2xl text-sm  edit-btn">Edit</button>
-                    <button class=" bg-red-700 px-3 rounded-2xl text-white text-sm hover:bg-red-700 transition delete-btn">Delete</button>
+                <div class="flex space-x-2 mt-1">
+                    <button class="text-blue-500 text-sm hover:underline reply-btn">Reply</button>
+                    ${isReply ? '<button class="text-gray-500 text-sm hover:underline edit-btn">Edit</button>' : ''}
+                    ${isReply ? '<button class="text-red-500 text-sm hover:underline delete-btn">Delete</button>' : ''}
                 </div>
                 <div class="replies ml-6 mt-2 space-y-2 hidden"></div>
             </div>
@@ -64,11 +63,11 @@ document.addEventListener('DOMContentLoaded', () => {
             repliesContainer.appendChild(replyForm);
         });
 
-        deleteBtn.addEventListener('click', () => {
+        deleteBtn?.addEventListener('click', () => {
             parentElement.removeChild(comment);
         });
 
-        editBtn.addEventListener('click', () => {
+        editBtn?.addEventListener('click', () => {
             const isEditing = editBtn.textContent === 'Save';
             if (isEditing) {
                 const editText = comment.querySelector('.edit-textarea').value.trim();
@@ -90,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         parentElement.appendChild(comment);
+        return comment;
     }
 
     function createReplyForm() {
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         replySubmitBtn.addEventListener('click', () => {
             const replyText = replyInput.value.trim();
             if (replyText) {
-                addComment(replyText, "You", "./ai-generated-8635685_640.webp", replyForm.parentElement);
+                addComment(replyText, getRandomUserName(), getRandomAvatar(), replyForm.parentElement, true); 
                 replyForm.remove();
             } else {
                 alert("Comment box is empty");
@@ -127,8 +127,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function initializeDefaultComments() {
-        addComment("Nice Work....! Brother", "Gaurav Sonawane", "./d7090ecd0836259fe622e0bb84370d54.jpg");
-        addComment("Your UI is Good Brother...👍", "Pranav Mali", "./generative-ai-young-smiling-man-avatar-man-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-d-vector-people-279560903.webp");
-        addComment("Hey, can you share your GitHub repo🚀", "Mansi Mali", "./360_F_616479367_JcdjFpbvTp2H9XhQZxB9HiW1xOpVP5wY.jpg");
+        const comment1 = addComment("Nice Work....! Brother", getRandomUserName(), getRandomAvatar(), commentsContainer, false);
+        addNestedReply(comment1, "Thanks, Appreciate it!", getRandomUserName(), getRandomAvatar());
+        addNestedReply(comment1, "Can you share your linkedin profile Bro...", getRandomUserName(), getRandomAvatar());
+
+        const comment2 = addComment("Your UI is Good Brother...👍", getRandomUserName(), getRandomAvatar(), commentsContainer, false);
+        addNestedReply(comment2, "Thank you! Let me know if you need any help.", getRandomUserName(), getRandomAvatar());
+        addNestedReply(comment2, "Where you add these Ideas in your Ui can you tell me !", getRandomUserName(), getRandomAvatar());
+    }
+
+    function addNestedReply(comment, text, userName, avatarURL) {
+        const repliesContainer = comment.querySelector('.replies');
+        const replyComment = addComment(text, userName, avatarURL, repliesContainer, true); 
+        repliesContainer.classList.remove('hidden');
     }
 });
