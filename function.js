@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const charCounter = document.getElementById('charCounter');
     const resetButton = document.getElementById('resetButton');
     console.log(resetButton);
-    
+
     const charLimit = 250;
 
     const randomUserNames = [
@@ -15,14 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const randomAvatarURLs = [
         "./ai-generated-8635685_640.webp", "./d7090ecd0836259fe622e0bb84370d54.jpg", 
         "./generative-ai-young-smiling-man-avatar-man-brown-beard-mustache-hair-wearing-yellow-sweater-sweatshirt-d-vector-people-279560903.webp", 
-        "./4.jpeg", "./5.jpeg" ,"./7.webp", "./8.jpg", "./9.jpeg", "./10.jpg", "https://thumbs.dreamstime.com/b/image-smiling-man-who-has-idea-handsome-bearded-guy-sweater-just-came-up-great-thought-white-background-134071461.jpg", "https://st2.depositphotos.com/1337688/5718/i/450/depositphotos_57188137-stock-photo-smiling-young-boy-in-a.jpg","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ0FpBg5Myb9CQ-bQpFou9BY9JXoRG6208_Q&s", "https://xsgames.co/randomusers/assets/avatars/male/74.jpg"
+        "./4.jpeg", "./5.jpeg" ,"./7.webp", "./8.jpg", "./9.jpeg", "./10.jpg", 
+        "https://thumbs.dreamstime.com/b/image-smiling-man-who-has-idea-handsome-bearded-guy-sweater-just-came-up-great-thought-white-background-134071461.jpg", 
+        "https://st2.depositphotos.com/1337688/5718/i/450/depositphotos_57188137-stock-photo-smiling-young-boy-in-a.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ0FpBg5Myb9CQ-bQpFou9BY9JXoRG6208_Q&s", 
+        "https://xsgames.co/randomusers/assets/avatars/male/74.jpg"
     ];
 
     initializeDefaultComments();
 
-
     resetButton.addEventListener('click', () => {
-        // Clear the comment section
         window.location.reload();
     });
 
@@ -58,7 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const commentTextElement = comment.querySelector('.comment-text');
 
         replyBtn.addEventListener('click', () => {
-            const replyForm = createReplyForm();
+            // Create the reply form with username input and textarea
+            const replyForm = createReplyFormWithUsername();
             repliesContainer.classList.remove('hidden');
             repliesContainer.appendChild(replyForm);
         });
@@ -92,21 +95,25 @@ document.addEventListener('DOMContentLoaded', () => {
         return comment;
     }
 
-    function createReplyForm() {
+    // Create reply form with username input and comment textarea
+    function createReplyFormWithUsername() {
         const replyForm = document.createElement('div');
         replyForm.classList.add('reply-form', 'mt-2');
         replyForm.innerHTML = `
-            <textarea rows="2" maxlength="250" placeholder="Add a reply..."
-                class="w-full p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:border-blue-400"></textarea>
+            <input type="text" placeholder="Enter your username" 
+                class="w-[200px] p-2 mb-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" id="username-input">
+            <textarea rows="2" maxlength="250" placeholder="Add a reply..." 
+                class="w-full p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:border-blue-400" id="comment-input"></textarea>
             <div class="flex justify-between items-center mt-1">
                 <span class="reply-counter text-sm text-gray-600">250 characters left</span>
                 <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600 reply-submit">Submit</button>
             </div>
         `;
 
-        const replyInput = replyForm.querySelector('textarea');
+        const replyInput = replyForm.querySelector('#comment-input');
         const replyCounter = replyForm.querySelector('.reply-counter');
         const replySubmitBtn = replyForm.querySelector('.reply-submit');
+        const usernameInput = replyForm.querySelector('#username-input');
 
         replyInput.addEventListener('input', () => {
             const remaining = charLimit - replyInput.value.length;
@@ -114,12 +121,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         replySubmitBtn.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
             const replyText = replyInput.value.trim();
-            if (replyText) {
-                addComment(replyText, getRandomUserName(), getRandomAvatar(), replyForm.parentElement, true); 
+
+            if (username && replyText) {
+                addComment(replyText, username, getRandomAvatar(), replyForm.parentElement, true); 
                 replyForm.remove();
             } else {
-                alert("Comment box is empty");
+                alert("Username and comment box must not be empty.");
             }
         });
 
@@ -141,4 +150,5 @@ document.addEventListener('DOMContentLoaded', () => {
         const replyComment = addComment(text, userName, avatarURL, repliesContainer, true); 
         repliesContainer.classList.remove('hidden');
     }
+
 });
