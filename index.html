@@ -6,21 +6,20 @@
   <title>Nested Comments</title>
   <link rel="stylesheet" href="./output.css">
 </head>
-<body class="bg-gray-100 p-6">
-  <div class="max-w-2xl mx-auto bg-white shadow-lg p-6 rounded-lg">
+<body class="bg-gray-100 p-4 md:p-6">
+  <div class="max-w-3xl mx-auto bg-white shadow-lg p-6 rounded-lg">
     <div class="flex justify-between p-1">
       <h1 class="text-2xl font-semibold mb-4">Nested Comments Project</h1>
-      <button id="resetButton" class="px-5 py-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none">
+      <button id="resetButton" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none">
         Reset
       </button>
     </div>
 
     <!-- New Comment Form -->
-    <div class="p-1.4 p-2">
-      
+    <div class="p-4">
       <h2 class="text-xl font-semibold mb-4">Add a New Comment</h2>
       <form id="newCommentForm" class="space-y-4">
-        <input type="text" placeholder="Enter your username" class="w-[200px] p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" id="username-input">
+        <input type="text" placeholder="Enter your username" class="w-full sm:w-[300px] p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400" id="username-input" required>
         <textarea id="commentText" class="w-full p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:border-blue-400" rows="4" maxlength="250" placeholder="Add a comment..." required></textarea>
         <div class="flex justify-between items-center mt-1">
           <span id="charCounter" class="text-sm text-gray-600">250 characters left</span>
@@ -30,7 +29,7 @@
     </div>
 
     <!-- Comments Container -->
-    <div id="commentsContainer" class="space-y-4"></div>
+    <div id="commentsContainer" class="space-y-4 mt-6"></div>
 
   </div>
 

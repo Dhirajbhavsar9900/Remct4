@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     const commentsContainer = document.getElementById('commentsContainer');
     const charCounter = document.getElementById('charCounter');
     const resetButton = document.getElementById('resetButton');
@@ -60,11 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const deleteBtn = comment.querySelector('.delete-btn');
         const repliesContainer = comment.querySelector('.replies');
         const commentTextElement = comment.querySelector('.comment-text');
-
+        
         replyBtn.addEventListener('click', () => {
-            const replyForm = createReplyFormWithUsername();
-            repliesContainer.classList.remove('hidden');
-            repliesContainer.appendChild(replyForm);
+            if (repliesContainer.querySelector('.reply-form')) {
+                repliesContainer.querySelector('.reply-form').remove();
+            } else {
+                const replyForm = createReplyFormWithUsername();
+                repliesContainer.classList.remove('hidden');
+                repliesContainer.appendChild(replyForm);
+            }
         });
 
         deleteBtn?.addEventListener('click', () => {
@@ -92,7 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        parentElement.appendChild(comment);
+        if (isReply) {
+            parentElement.appendChild(comment); // Replies appear at the bottom
+        } else {
+            parentElement.prepend(comment); // New comments appear at the top
+        }
+
         return comment;
     }
 
@@ -125,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const replyText = replyInput.value.trim();
 
             if (username && replyText) {
-                addComment(replyText, username, getRandomAvatar(), replyForm.parentElement, true); 
+                addComment(replyText, username, getRandomAvatar(), replyForm.parentElement, true);
                 replyForm.remove();
             } else {
                 alert("Username and comment box must not be empty.");
@@ -138,20 +146,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeDefaultComments() {
         const comment1 = addComment("Nice Work....! Brother", getRandomUserName(), getRandomAvatar(), commentsContainer, false);
         addNestedReply(comment1, "Thanks, Appreciate it!", getRandomUserName(), getRandomAvatar());
-        addNestedReply(comment1, "Can you share your linkedin profile Bro...", getRandomUserName(), getRandomAvatar());
+        addNestedReply(comment1, "Can you share your LinkedIn profile, Bro?", getRandomUserName(), getRandomAvatar());
 
         const comment2 = addComment("Your UI is Good Brother...👍", getRandomUserName(), getRandomAvatar(), commentsContainer, false);
         addNestedReply(comment2, "Thank you! Let me know if you need any help.", getRandomUserName(), getRandomAvatar());
-        addNestedReply(comment2, "Where you add these Ideas in your Ui can you tell me !", getRandomUserName(), getRandomAvatar());
+        addNestedReply(comment2, "Where do you get these ideas for your UI?", getRandomUserName(), getRandomAvatar());
     }
 
     function addNestedReply(comment, text, userName, avatarURL) {
         const repliesContainer = comment.querySelector('.replies');
-        const replyComment = addComment(text, userName, avatarURL, repliesContainer, true); 
+        const replyComment = addComment(text, userName, avatarURL, repliesContainer, true);
         repliesContainer.classList.remove('hidden');
     }
 
-    // Add event listener to new comment form
     newCommentForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const username = usernameInput.value.trim();
@@ -167,10 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Update character counter for new comment input
     commentText.addEventListener('input', () => {
         const remaining = charLimit - commentText.value.length;
         charCounter.textContent = `${remaining} characters left`;
     });
 });
-    
