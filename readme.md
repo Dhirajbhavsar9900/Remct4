@@ -55,3 +55,16 @@ Follow these steps to set up the project locally:
     open index.html
 
 ## Usage
+
+1. Open the project in your browser.
+2. Add a new comment using the provided input fields.
+3. Reply to any existing comment by clicking the Reply button.
+4. Edit or delete comments using the action buttons.
+
+## Configuration
+
+To customize the project:
+
+-  Modify the **TailwindCSSI** configuration in tailwind.config.js (if applicable).
+- Update the JavaScript logic in script.js for custom functionality.
+- Edit the HTML structure in index.html to adapt to your requirements.
