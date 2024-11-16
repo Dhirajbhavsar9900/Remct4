@@ -12,7 +12,6 @@ A lightweight and responsive nested comment system built with **HTML**, **Tailwi
 - [Configuration](#configuration)
 - [Examples](#examples)
 - [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
 - [License](#license)
 
 ---
@@ -54,12 +53,16 @@ Follow these steps to set up the project locally:
     ```bash
     open index.html
 
+---
+
 ## Usage
 
 1. Open the project in your browser.
 2. Add a new comment using the provided input fields.
 3. Reply to any existing comment by clicking the Reply button.
 4. Edit or delete comments using the action buttons.
+
+---
 
 ## Configuration
 
@@ -69,6 +72,8 @@ To customize the project:
 - Update the JavaScript logic in script.js for custom functionality.
 - Edit the HTML structure in index.html to adapt to your requirements.
 
+---
+
 ## Examples 
 Here’s an example of how the nested comments appear:
 
@@ -77,6 +82,8 @@ Here’s an example of how the nested comments appear:
        - Reply 1.1.1
    - Reply 1.2
 - Comment 2
+
+---
 
 ## Troubleshooting
 
@@ -91,6 +98,8 @@ Here’s an example of how the nested comments appear:
 
 - Check the browser console for errors.
 - Ensure the script.js file is correctly linked and loaded.
+
+---
 
 ## License
 
