@@ -104,5 +104,3 @@ Here’s an example of how the nested comments appear:
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
-
-Copy the above content and save it as `README.md` in your project folder. Let me know if you need more edits! 😊
